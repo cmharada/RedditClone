@@ -1,0 +1,10 @@
+<h1>All Subs</h1>
+
+<ul>
+  <% @subs.each do |sub| %>
+    <li><a href="<%= sub_url(sub) %>"><%= sub.title %></a></li>
+    <%= sub.description %>
+  <% end %>
+</ul>
+<br>
+<%= link_to "Create new sub", new_sub_url %>
