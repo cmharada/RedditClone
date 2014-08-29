@@ -6,8 +6,7 @@ Posted by <%= @post.author.username %>
 <br>
 <ul>
   <% @comments.each do |comment| %>
-  <li><%= comment.content %></li>
-  <li>Posted by: <%= comment.author.username %></li>
+    <li><%= render partial: "comments/comment", locals: { comment: comment } %></li>
   <% end %>
 </ul>
 

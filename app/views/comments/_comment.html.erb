@@ -1,0 +1,9 @@
+<a href = "<%= comment_path(comment) %>"><%= comment.content %></a>
+<br>Posted by <%= comment.author.username %>
+<br>
+<ul>
+  <% comment.child_comments.each do |child_comment| %>
+    <li><%= render partial: "comments/comment", locals: {
+        comment: child_comment } %></li>
+  <% end %>
+</ul>
