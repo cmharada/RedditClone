@@ -6,5 +6,11 @@ class Sub < ActiveRecord::Base
   foreign_key: :moderator_id,
   primary_key: :id
   
-  has_many :posts
+  has_many(
+    :posts,
+    through: :post_subs,
+    source: :post
+  )
+  
+  has_many :post_subs, :inverse_of => :sub
 end

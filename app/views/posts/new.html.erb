@@ -18,13 +18,11 @@
   <label for="content">Content:</label>
   <textarea name="post[content]" id="content"><%= @post.content %></textarea>
   <br>
-  <select name="post[sub_id]">
-    <% @subs.each do |sub| %>
-    <option value="<%= sub.id %>" <%= "selected" if (sub == @current_sub) %> ><%= sub.title %></option> 
-    <% end %>
-  </select>
+  <% @subs.each do |sub| %>
+  <input type="checkbox" name="post[sub_ids][]" value="<%= sub.id %>" <%= "checked" if @post.subs.include?(sub) %>><%=  sub.title %><br>
+  <% end %>
+  
   <input type="submit" value="Post">
 </form>
 
 <br>
-<%= link_to "Back to Sub", sub_url(@current_sub) %>

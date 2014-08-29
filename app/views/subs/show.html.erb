@@ -7,11 +7,11 @@
 
 <ul>
 <% @posts.each do |post| %>
-  <li><a href="<%= sub_post_url(@sub, post) %>"><%= post.title %></a>
+  <li><a href="<%= post_url(post) %>"><%= post.title %></a>
 <% end %>
 </ul>
 <br>
-<%= link_to "Add post", new_sub_post_url(@sub) %>
+<%= link_to "Add post", new_post_url %>
 <br>
 <%= link_to "Edit this sub", edit_sub_url(@sub) %>
 <br>

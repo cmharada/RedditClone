@@ -1,9 +1,18 @@
 <h1><%= @post.title %></h1>
+Posted by <%= @post.author.username %>
 <%= @post.url %>
 <br>
 <%= @post.content %>
 <br>
+<ul>
+  <% @comments.each do |comment| %>
+  <li><%= comment.content %></li>
+  <li>Posted by: <%= comment.author.username %></li>
+  <% end %>
+</ul>
 
-<%= link_to "Edit post", edit_sub_post_url(@sub, @post) %>
-<%= link_to "Delete this post", sub_post_url(@sub, @post), method: "delete" %>
-<%= link_to "Back to Sub", sub_url(@sub) %>
+
+<%= link_to "Comment", new_post_comment_url(@post) %>
+<%= link_to "Edit post", edit_post_url(@post) %>
+<%= link_to "Delete this post", post_url(@post), method: "delete" %>
+<%= link_to "Back to Sub", subs_url %>

@@ -5,15 +5,16 @@ class PostsController < ApplicationController
   def new
     @post = Post.new
     @subs = Sub.all
-    @current_sub = Sub.find(params[:sub_id])
     render :new
   end
   
   def create
     @post = Post.new(post_params)
+    @subs = Sub.all
+    @post.sub_ids = params[:post][:sub_ids]
     @post.author = current_user
     if @post.save
-      redirect_to sub_url(params[:post][:sub_id])
+      redirect_to subs_url
     else
       flash.now[:errors] = @post.errors.full_messages
       render :new
@@ -23,30 +24,33 @@ class PostsController < ApplicationController
   def edit
     @post = Post.find(params[:id])
     @subs = Sub.all
-    @current_sub = Sub.find(params[:sub_id])
     render :edit
   end
   
   def update
     @post = Post.find(params[:id])
-    if @post.update(post_params)
-      redirect_to sub_post_url(@post.sub, @post)
+    
+    if @post.transaction do
+      @post.sub_ids = params[:post][:sub_ids]
+      @post.update(post_params)
+    end      
+      redirect_to subs_url
     else
-      flash.now[:errors] = @post.errors.full_messages
-      render :edit
-    end
+    flash.now[:errors] = @post.errors.full_messages
+    render :edit
+  end
   end
   
   def show
     @post = Post.find(params[:id])
-    @sub = Sub.find(params[:sub_id])
+    @comments = @post.comments
     render :show
   end
   
   def destroy
     @post = Post.find(params[:id])
     @post.destroy
-    redirect_to @post.sub
+    redirect_to subs_url
   end
   
   private
@@ -54,7 +58,7 @@ class PostsController < ApplicationController
   def ensure_author_is_current_user
     unless Post.find(params[:id]).author == current_user
       flash[:errors] = ["You did not author this post"]
-      redirect_to sub_url(Post.find(params[:id]).sub)
+      redirect_to subs_url
     end
   end
   
@@ -66,6 +70,6 @@ class PostsController < ApplicationController
   end
   
   def post_params
-    params.require(:post).permit(:title, :url, :content, :sub_id)
+    params.require(:post).permit(:title, :url, :content)
   end
 end
