@@ -3,4 +3,7 @@
 <br>
 <%= @post.content %>
 <br>
+
+<%= link_to "Edit post", edit_sub_post_url(@sub, @post) %>
+<%= link_to "Delete this post", sub_post_url(@sub, @post), method: "delete" %>
 <%= link_to "Back to Sub", sub_url(@sub) %>
