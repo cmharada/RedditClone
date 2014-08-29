@@ -44,6 +44,7 @@ class PostsController < ApplicationController
   def show
     @post = Post.find(params[:id])
     @comments = @post.top_level_comments
+    @all_comments = @post.comments.includes(:submitter)
     render :show
   end
   
