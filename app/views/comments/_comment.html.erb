@@ -3,9 +3,11 @@
 <br>
 <ul>
   <% all_comments.each do |child_comment| %>
-    <li><%= render partial: "comments/comment",
-      locals: {
-        comment: child_comment,
-        all_comments: all_comments } %></li>
+    <% if child_comment.parent_comment_id == comment.id %>
+      <li><%= render partial: "comments/comment",
+        locals: {
+          comment: child_comment,
+          all_comments: all_comments } %></li>
+    <% end %>
   <% end %>
 </ul>

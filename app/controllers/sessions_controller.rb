@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
       params[:user][:password])
     if @user
       login!(@user)
-      redirect_to user_url(@user)
+      redirect_to subs_url
     else
       flash.now[:errors] = ["Bad username/password"]
       @user = User.new(username: params[:user][:username])
