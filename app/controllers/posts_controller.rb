@@ -43,8 +43,7 @@ class PostsController < ApplicationController
   
   def show
     @post = Post.find(params[:id])
-    @comments = @post.top_level_comments
-    @all_comments = @post.comments.includes(:author)
+    @comments_by_parent_id = @post.comments_by_parent_id
     render :show
   end
   

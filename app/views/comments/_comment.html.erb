@@ -2,12 +2,10 @@
 <br>Posted by <%= comment.author.username %>
 <br>
 <ul>
-  <% all_comments.each do |child_comment| %>
-    <% if child_comment.parent_comment_id == comment.id %>
-      <li><%= render partial: "comments/comment",
-        locals: {
-          comment: child_comment,
-          all_comments: all_comments } %></li>
-    <% end %>
+  <% comments_by_parent_id[comment.id].each do |child_comment| %>
+    <li><%= render partial: "comments/comment",
+      locals: {
+        comment: child_comment,
+        comments_by_parent_id: comments_by_parent_id } %></li>
   <% end %>
 </ul>

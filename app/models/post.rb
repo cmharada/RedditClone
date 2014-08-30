@@ -22,4 +22,12 @@ class Post < ActiveRecord::Base
   foreign_key: :post_id,
   primary_key: :id
   
+  def comments_by_parent_id
+    comments_hash = Hash.new { Array.new }
+    self.comments.includes(:author).each do |comment|
+      comments_hash[comment.parent_comment_id] =
+        comments_hash[comment.parent_comment_id] << comment
+    end
+    comments_hash
+  end
 end

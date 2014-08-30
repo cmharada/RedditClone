@@ -5,12 +5,11 @@ Posted by <%= @post.author.username %>
 <%= @post.content %>
 <br>
 <ul>
-  <% @all_comments.each do |comment| %>
-    <% if comment.parent_comment_id.nil? %>
-      <li><%= render partial: "comments/comment",
-        locals: { comment: comment, all_comments: @all_comments } %></li>
-      <% end %>
-  <% end %>
+  <% @comments_by_parent_id[nil].each do |comment| %>
+    <li><%= render partial: "comments/comment",
+      locals: { comment: comment,
+        comments_by_parent_id: @comments_by_parent_id } %></li>
+    <% end %>
 </ul>
 
 
