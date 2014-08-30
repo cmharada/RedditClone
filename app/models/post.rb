@@ -22,6 +22,8 @@ class Post < ActiveRecord::Base
   foreign_key: :post_id,
   primary_key: :id
   
+  has_many :votes, as: :votable
+  
   def comments_by_parent_id
     comments_hash = Hash.new { Array.new }
     self.comments.includes(:author).each do |comment|
@@ -29,5 +31,13 @@ class Post < ActiveRecord::Base
         comments_hash[comment.parent_comment_id] << comment
     end
     comments_hash
+  end
+  
+  def score
+    score = 0
+    self.votes.each do |vote|
+      score += vote.value
+    end
+    score
   end
 end

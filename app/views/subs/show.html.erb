@@ -8,6 +8,23 @@
 <ul>
 <% @posts.each do |post| %>
   <li><a href="<%= post_url(post) %>"><%= post.title %></a>
+    Score: <%= post.score %>
+<form action="<%= votes_url %>" method="POST">
+  <input type="hidden" name="authenticity_token" 
+         value="<%= form_authenticity_token %>">
+  <input type="hidden" name="vote[value]" value=1>
+  <input type="hidden" name="vote[votable_id]" value="<%= post.id %>">
+  <input type="hidden" name="vote[votable_type]" value="Post">
+  <input type="submit" value="UP">
+</form>
+<form action="<%= votes_url %>" method="POST">
+  <input type="hidden" name="authenticity_token" 
+         value="<%= form_authenticity_token %>">
+  <input type="hidden" name="vote[value]" value=-1>
+  <input type="hidden" name="vote[votable_id]" value="<%= post.id %>">
+  <input type="hidden" name="vote[votable_type]" value="Post">
+  <input type="submit" value="DOWN">
+</form>
 <% end %>
 </ul>
 <br>
@@ -18,3 +35,4 @@
 <%= link_to "Delete", sub_url(@sub), method: :delete %>
 <br>
 <%= link_to "Subs Home", subs_url %>
+

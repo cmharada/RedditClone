@@ -1,5 +1,22 @@
 <a href = "<%= comment_path(comment) %>"><%= comment.content %></a>
 <br>Posted by <%= comment.author.username %>
+<br>Score: <%= comment.score %>
+<form action="<%= votes_url %>" method="POST">
+  <input type="hidden" name="authenticity_token" 
+         value="<%= form_authenticity_token %>">
+  <input type="hidden" name="vote[value]" value=1>
+  <input type="hidden" name="vote[votable_id]" value="<%= comment.id %>">
+  <input type="hidden" name="vote[votable_type]" value="Comment">
+  <input type="submit" value="UP">
+</form>
+<form action="<%= votes_url %>" method="POST">
+  <input type="hidden" name="authenticity_token" 
+         value="<%= form_authenticity_token %>">
+  <input type="hidden" name="vote[value]" value=-1>
+  <input type="hidden" name="vote[votable_id]" value="<%= comment.id %>">
+  <input type="hidden" name="vote[votable_type]" value="Comment">
+  <input type="submit" value="DOWN">
+</form>
 <br>
 <ul>
   <% comments_by_parent_id[comment.id].each do |child_comment| %>
